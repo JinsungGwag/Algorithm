@@ -1,6 +1,5 @@
 #include <cstdio>
 #include <cstring>
-#include <Windows.h>
 
 int main()
 {
@@ -38,7 +37,6 @@ int main()
 		}
 	}
 
-	// :: 예외 처리
 	int blank = 0;
 	for(int i = 0; i < 8; i++)
 	{
@@ -49,14 +47,25 @@ int main()
 		}
 	}
 
+	bool change = false;
+	bool check = false;
+	start = 0;
 	for(int i = 0; i < 8; i++)
 	{
 		if(!strcmp(ipv6[i], "\0"))
 		{
 			strcpy(ipv6[i], "0000");
+			if(!check) change = true;
 		}
 		else
 		{
+			if(change)
+			{
+				start = i;
+				change = false;
+				check = true;
+			}
+
 			int size = strlen(ipv6[i]);
 			if(size < 4)
 			{
@@ -71,16 +80,18 @@ int main()
 
 	if(blank > 0)
 	{
-		for(int i = 7; i > 7 - blank; i--)
+		int repeat = 7 - start - blank;
+
+		for(int i = start + repeat; i >= start; i--)
 		{
-			strcpy(ipv6[i], ipv6[i - blank]);
-			strcpy(ipv6[i - blank], "0000");
+			strcpy(ipv6[i + blank], ipv6[i]);
+			strcpy(ipv6[i], "0000");
 		}
 	}
 	
-	for(int i = 0; i < 8; i++)
-		printf("%s\n", ipv6[i]);
+	for(int i = 0; i < 7; i++)
+		printf("%s:", ipv6[i]);
+	printf("%s\n", ipv6[7]);
 
-	system("pause");
 	return 0;
 }
