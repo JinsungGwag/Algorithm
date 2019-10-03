@@ -47,6 +47,20 @@ int main()
 		}
 	}
 
+	// ::가 뒤에 있는지 판별
+	bool behind = false;
+	int back = -1;
+	for(int i = 0; i < 8; i++)
+	{
+		if(!strcmp(ipv6[i], "\0"))
+		{
+			back = i;
+			break;
+		}
+	}
+	if(back != 0 && (back == 7 || !strcmp(ipv6[back + 1], "\0")))
+		behind = true;
+
 	bool change = false;
 	bool check = false;
 	start = 0;
@@ -78,7 +92,7 @@ int main()
 		}
 	}
 
-	if(blank > 0)
+	if(blank > 0 && !behind)
 	{
 		int repeat = 7 - start - blank;
 
