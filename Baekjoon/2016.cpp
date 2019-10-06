@@ -4,6 +4,7 @@ struct Student
 {
 	int match;
 	int love[5];
+	bool black[6];
 };
 
 bool compare(Student st, int before, int after)
@@ -39,11 +40,16 @@ int main()
 	{
 		best = -1;
 
+		// 미팅 환경 초기화
 		for(int i = 1; i <= 5; i++)
 			boys[i].match = -1;
 		for(int i = 6; i <= 10; i++)
+		{
 			girls[i].match = -1;
-
+			for(int j = 1; j <= 5; j++)
+				girls[i].black[j] = false;
+		}
+		
 		for(int i = 2; i <= 5; i++)
 			scanf("%d %d %d %d %d", &boys[i].love[0], &boys[i].love[1], &boys[i].love[2], &boys[i].love[3], &boys[i].love[4]);
 
@@ -61,6 +67,8 @@ int main()
 				{
 					for(int j = 0; j < 5; j++)
 					{
+						if(girls[i].black[girls[i].love[j]]) continue;
+
 						// 여학생 선호가 태현이일 경우 비교
 						if(girls[i].love[j] == 1)
 						{
@@ -83,9 +91,17 @@ int main()
 						else if(compare(boys[girls[i].love[j]], boys[girls[i].love[j]].match, i))
 						{
 							girls[i].match = girls[i].love[j];
+							
 							girls[boys[girls[i].love[j]].match].match = -1;
+							girls[boys[girls[i].love[j]].match].black[girls[i].love[j]] = true;
+							
 							boys[girls[i].love[j]].match = i;
 
+							break;
+						}
+						else
+						{
+							girls[i].black[girls[i].love[j]] = true;
 							break;
 						}
 					}
