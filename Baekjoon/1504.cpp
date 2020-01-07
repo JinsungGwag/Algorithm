@@ -44,6 +44,10 @@ int main()
     scanf("%d %d", &N, &E);
     initArray();
     
+    // 맵 전체 초기화
+    for (int i = 1; i <= N; i++)
+        memset(map[i], -1, sizeof(int) * (N + 1));
+    
     int n1, n2, dis;
     for(int i = 0; i < E; i++)
     {
