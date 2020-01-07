@@ -2,14 +2,12 @@
 #include <cstring>
 
 int N, E;
-bool point[801];
 int map[801][801];
 int shortest[801][801];
 
 // 배열 초기화
 void initArray()
 {
-    memset(point, true, sizeof(bool) * (N + 1));
     for(int i = 1; i <= N; i++)
         memset(shortest[i], -1, sizeof(int) * (N + 1));
 }
@@ -17,11 +15,16 @@ void initArray()
 // 시작점에서 목적지까지의 최단거리 탐색
 void searchShort(int pre, int dis, int start, int end)
 {
-    point[pre] = false;
+    // 시작이랑 끝이 동일할 때 경우 처리
+    if(start == end)
+    {
+        shortest[start][end] = 0;
+        return;
+    }
     
     for(int i = 1; i <= N; i++)
     {
-        if(map[pre][i] == -1 || !point[i])
+        if(map[pre][i] == -1)
             continue;
         
         if(shortest[start][i] == -1)
