@@ -71,14 +71,12 @@ int main()
     else
     {
         way1 += shortest[1][n1];
-        initArray();
         searchShort(n1, 0, n1, n2);
         if(shortest[n1][n2] == -1)
             way1 = -1;
         else
         {
             way1 += shortest[n1][n2];
-            initArray();
             searchShort(n2, 0, n2, N);
             if(shortest[n2][N] == -1)
                 way1 = -1;
@@ -88,21 +86,18 @@ int main()
     }
     
     // 경로2의 최단거리 탐색
-    initArray();
     searchShort(1, 0, 1, n2);
     if(shortest[1][n2] == -1)
         way2 = -1;
     else
     {
         way2 += shortest[1][n2];
-        initArray();
         searchShort(n2, 0, n2, n1);
         if(shortest[n2][n1] == -1)
             way2 = -1;
         else
         {
             way2 += shortest[n2][n1];
-            initArray();
             searchShort(n1, 0, n1, N);
             if(shortest[n1][N] == -1)
                 way2 = -1;
